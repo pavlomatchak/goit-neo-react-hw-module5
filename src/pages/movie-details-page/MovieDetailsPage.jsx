@@ -33,7 +33,7 @@ const MovieDetailsPage = ({ setMovieId }) => {
   }, [movieId, setMovieId]);
 
   function handleGoBack() {
-    navigate(location.state?.from || '/movies', { replace: true });
+    navigate(location.state?.from || '/', { replace: true });
   }
   
   return (

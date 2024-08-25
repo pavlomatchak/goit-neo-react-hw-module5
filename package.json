@@ -2,15 +2,12 @@
   "name": "goit-neo-react-hw-module5",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://pavlomatchak.github.io/goit-neo-react-hw-module5/",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build --base=/goit-neo-react-hw-module5/",
     "lint": "eslint .",
-    "preview": "vite preview",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "preview": "vite preview"
   },
   "dependencies": {
     "axios": "^1.7.5",
