@@ -1,15 +1,15 @@
 import axios from 'axios';
 import { API_TOKEN } from '../../config';
-import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Link, Outlet, useNavigate, useLocation, useParams } from 'react-router-dom';
 import css from './MovieDetailsPage.module.css';
 
-const MovieDetailsPage = ({ setMovieId }) => {
+const MovieDetailsPage = () => {
   const { movieId } = useParams();
   const [movie, setMovie] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
+  const locationRef = useRef(location.state);
   
   useEffect(() => {
     async function fetchMovieDetails() {
@@ -27,13 +27,12 @@ const MovieDetailsPage = ({ setMovieId }) => {
     }
 
     if (movieId) {
-      setMovieId(movieId);
       fetchMovieDetails();
     }
-  }, [movieId, setMovieId]);
+  }, [movieId]);
 
   function handleGoBack() {
-    navigate(location.state?.from || '/', { replace: true });
+    navigate(locationRef.current?.from || '/', { replace: true });
   }
   
   return (
@@ -79,9 +78,5 @@ const MovieDetailsPage = ({ setMovieId }) => {
     </div>
   );
 }
-
-MovieDetailsPage.propTypes = {
-  setMovieId: PropTypes.func.isRequired,
-};
 
 export default MovieDetailsPage;

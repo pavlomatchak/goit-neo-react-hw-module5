@@ -1,11 +1,17 @@
-import PropTypes from 'prop-types';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import css from './MovieCast.module.css';
+import { fetchMovieCast } from '../../services/fetch-movie-cast';
 
-const MovieCast = ({ cast, fetchMovieCast }) => {
+const MovieCast = () => {
+  const { movieId } = useParams();
+  const [cast, setCast] = useState([]);
+
   useEffect(() => {
-    fetchMovieCast();
-  }, [fetchMovieCast]);
+    fetchMovieCast(movieId).then(({ data }) => {
+      setCast(data.cast);
+    });
+  }, [movieId]);
   
   return (
     <div>
@@ -26,15 +32,5 @@ const MovieCast = ({ cast, fetchMovieCast }) => {
     </div>
   );
 }
-
-MovieCast.propTypes = {
-  cast: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    character: PropTypes.string.isRequired,
-    profile_path: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-  })).isRequired,
-  fetchMovieCast: PropTypes.func.isRequired,
-};
 
 export default MovieCast;

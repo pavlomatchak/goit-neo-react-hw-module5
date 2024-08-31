@@ -1,11 +1,17 @@
-import PropTypes from 'prop-types';
-import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import css from './MovieReviews.module.css';
+import { fetchMovieReviews } from '../../services/fetch-movie-reviews';
 
-const MovieReviews = ({ reviews, fetchReviews }) => {
+const MovieReviews = () => {
+  const { movieId } = useParams();
+  const [reviews, setReviews] = useState([]);
+
   useEffect(() => {
-    fetchReviews();
-  }, [fetchReviews]);
+    fetchMovieReviews(movieId).then(({ data }) => {
+      setReviews(data.results);
+    });
+  }, [movieId]);
 
   function formatDate(date) {
     const d = new Date(date);
@@ -29,15 +35,5 @@ const MovieReviews = ({ reviews, fetchReviews }) => {
     </div>
   );
 }
-
-MovieReviews.propTypes = {
-  reviews: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    author: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired,
-    created_at: PropTypes.string.isRequired,
-  })).isRequired,
-  fetchReviews: PropTypes.func.isRequired,
-};
 
 export default MovieReviews;
